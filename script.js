@@ -139,7 +139,7 @@ function goToProject() {
   document.body.classList.add("fade-out");
 
   setTimeout(() => {
-    window.location.href = "task-manager/indextm.html";
+    window.location.href =  "/portfolio.io/task-manager/indexTM.html";
   }, 400);
 }
 
