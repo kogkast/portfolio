@@ -1,0 +1,226 @@
+@media (max-width: 768px) {
+
+  html, body {
+    background: #04080f;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+    width: 100%;
+    overflow-x: hidden;
+    overscroll-behavior: none;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    padding-top: 0;
+    align-items: stretch;
+  }
+
+  .page {
+    align-items: stretch;
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* NAV */
+.task-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 16px;
+
+  background: rgba(4, 8, 15, 0.97);
+  border-bottom: 1px solid rgba(56,189,248,0.12);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+}
+
+
+.task-nav h1 {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+}
+
+.back-btn {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+
+  font-size: 13px;
+  padding: 6px 12px;
+  border-radius: 10px;
+  background: rgba(56,189,248,0.15);
+  color: #38bdf8;
+}
+
+.container {
+  width: 100%;
+  max-width: 600px;
+  
+  padding: 40px;
+
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+
+  backdrop-filter: blur(20px);
+}
+
+
+.container,
+.task-box,
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  backdrop-filter: blur(20px);
+}
+
+  /* COUNTER */
+  #counter {
+    font-size: 12px;
+    text-align: center;
+    margin-bottom: 16px;
+    opacity: 0.5;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  /* TASK LIST */
+  ul {
+    flex: 1;
+    margin-top: 0;
+    padding-bottom: 120px;
+  }
+
+  li {
+    padding: 16px 14px;
+    border-radius: 18px;
+    margin-bottom: 10px;
+    background: rgba(15, 23, 42, 0.9);
+    border: 1px solid rgba(56,189,248,0.1);
+    box-shadow:
+      0 4px 16px rgba(0,0,0,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.04);
+    gap: 12px;
+  }
+
+  li span {
+    font-size: 16px;
+    line-height: 1.4;
+    font-weight: 400;
+  }
+
+  /* ACTION BUTTONS */
+  .actions {
+    gap: 8px;
+    flex-shrink: 0;
+  }
+
+  .actions button {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+    min-height: 38px;
+    border-radius: 12px;
+    font-size: 15px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+
+  /* INPUT — pinned to bottom like a chat app */
+  .input-section {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    flex-direction: row;
+    gap: 10px;
+    padding: 12px 16px 28px;
+    background: rgba(4, 8, 15, 0.97);
+    border-top: 1px solid rgba(56,189,248,0.1);
+    backdrop-filter: blur(20px);
+    z-index: 999;
+    margin-top: 0;
+  }
+
+  .input-section input {
+    flex: 1;
+    padding: 14px 16px;
+    border-radius: 16px;
+    font-size: 16px;
+    background: rgba(255,255,255,0.07);
+    border: 1px solid rgba(56,189,248,0.15);
+    color: #e2e8f0;
+  }
+
+  .input-section button {
+    width: auto;
+    min-width: 60px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    font-size: 16px;
+    font-weight: 600;
+    background: linear-gradient(135deg, #0ea5e9, #6366f1);
+    box-shadow: 0 4px 16px rgba(56,189,248,0.3);
+  }
+
+  /* LIGHT MODE */
+  body.light-mode {
+    background: #f0f4f8;
+  }
+
+  .light-mode .container {
+    background: #f0f4f8;
+  }
+
+  .light-mode .task-nav {
+    background: rgba(255,255,255,0.97);
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .light-mode .task-nav h1 {
+    color: #0f172a;
+  }
+
+  .light-mode .back-btn {
+    background: rgba(14,165,233,0.1);
+    color: #0ea5e9;
+  }
+
+  .light-mode li {
+    background: white;
+    border: 1px solid rgba(0,0,0,0.07);
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    color: #0f172a;
+  }
+
+  .light-mode li span {
+    color: #0f172a;
+  }
+
+  .light-mode .input-section {
+    background: rgba(255,255,255,0.97);
+    border-top: 1px solid rgba(0,0,0,0.08);
+  }
+
+  .light-mode .input-section input {
+    background: #f1f5f9;
+    color: #0f172a;
+    border: 1px solid #cbd5e1;
+  }
+}
