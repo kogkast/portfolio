@@ -1,110 +1,170 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const savedTheme = localStorage.getItem("theme");
+function scrollToProjects() {
+  const el = document.getElementById("projects");
+  const offset = 80;
 
-  document.body.classList.remove("light-mode");
+  const top = el.offsetTop - offset;
 
-  if (savedTheme === "light") {
-    document.body.classList.add("light-mode");
-  }
-
-  renderTasks();
-});
-
-
-let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-
-function saveTasks() {
-  localStorage.setItem("tasks", JSON.stringify(tasks));
-}
-
-function renderTasks() {
-  const list = document.getElementById("taskList");
-  list.innerHTML = "";
-
-  tasks.forEach((task, index) => {
-    const li = document.createElement("li");
-
-    const span = document.createElement("span");
-    span.textContent = task.text;
-
-    if (task.completed) {
-      span.classList.add("completed");
-    }
-
-    const tickBtn = document.createElement("button");
-    tickBtn.textContent = "✔";
-
-    tickBtn.onclick = () => {
-      tasks[index].completed = !tasks[index].completed;
-      saveTasks();
-      renderTasks();
-    };
-
-    const delBtn = document.createElement("button");
-    delBtn.textContent = "X";
-
-    delBtn.onclick = () => {
-      tasks.splice(index, 1);
-      saveTasks();
-      renderTasks();
-    };
-
-    const actions = document.createElement("div");
-    actions.classList.add("actions");
-
-    actions.appendChild(tickBtn);
-    actions.appendChild(delBtn);
-
-    li.appendChild(span);
-    li.appendChild(actions);
-    list.appendChild(li);
+  window.scrollTo({
+    top: top,
+    behavior: "smooth"
   });
-
-  updateCounter();
 }
 
-function addTask() {
-  const input = document.getElementById("taskInput");
-  const text = input.value.trim();
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('show');
 
-  if (text === "") return;
 
-  tasks.push({ text: text, completed: false });
+      if (entry.target.id === "about") {
+        const skills = document.querySelectorAll('.progress');
 
-  saveTasks();
-  renderTasks();
+        skills.forEach(el => {
+          if (el.classList.contains('html')) el.style.width = '90%';
+          if (el.classList.contains('css')) el.style.width = '85%';
+          if (el.classList.contains('js')) el.style.width = '75%';
+          if (el.classList.contains('python')) el.style.width = '70%';
+        });
+      }
+    }
+  });
+}, { threshold: 0.3 });
 
-  input.value = "";
+
+const hiddenElements = document.querySelectorAll('section, .card');
+
+hiddenElements.forEach(el => observer.observe(el));
+
+const text = "Frontend Web Developer";
+let index = 0;
+
+function typeEffect() {
+  if (index < text.length) {
+    document.getElementById("typing").textContent += text.charAt(index);
+    index++;
+    setTimeout(typeEffect, 60);
+  }
 }
 
-document.getElementById("taskInput").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") addTask();
-});
+typeEffect();
 
 
 
-function updateCounter() {
-  const counter = document.getElementById("counter");
+const toggleBtn = document.getElementById("themeToggle");
 
-  const total = tasks.length;
-  const completed = tasks.filter(t => t.completed).length;
-
-  counter.textContent = `Completed: ${completed} / ${total}`;
+// load saved theme
+if (localStorage.getItem("theme") === "light") {
+  document.body.classList.add("light-mode");
+  toggleBtn.textContent = "☀️";
 }
 
-window.addEventListener("load", () => {
-  document.body.classList.add("loaded");
-});
+toggleBtn.onclick = () => {
+  document.body.classList.toggle("light-mode");
 
+  if (document.body.classList.contains("light-mode")) {
+    localStorage.setItem("theme", "light");
+    toggleBtn.textContent = "☀️";
+  } else {
+    localStorage.setItem("theme", "dark");
+    toggleBtn.textContent = "🌙";
+  }
+};
 
+(function() {
+  emailjs.init("D0E-nlcBuCcN_HpF8");
+})();
 
-function goBack() {
-  document.body.style.opacity = "0";
-  document.body.style.transform = "scale(0.98)";
+document.getElementById("contact-form").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  emailjs.sendForm("service_enbbu0h", "template_vpcv46m", this)
+   .then(() => {
+  const successMsg = document.getElementById("success-message");
+
+  this.reset();
+  successMsg.classList.add("show");
 
   setTimeout(() => {
-    window.location.href = "../index.html";
+    successMsg.classList.remove("show");
+  }, 3000);
+})
+.catch((error) => {
+  const errorMsg = document.getElementById("error-message");
+
+  errorMsg.classList.add("show");
+
+  setTimeout(() => {
+    errorMsg.classList.remove("show");
+  }, 3000);
+});
+});
+
+const toggle = document.getElementById("menu-toggle");
+const navLinks = document.getElementById("nav-links");
+const overlay = document.getElementById("overlay");
+
+toggle.addEventListener("click", () => {
+  navLinks.classList.toggle("active");
+  overlay.classList.toggle("active");
+  toggle.classList.toggle("active");
+});
+
+overlay.addEventListener("click", () => {
+  navLinks.classList.remove("active");
+  overlay.classList.remove("active");
+  toggle.classList.remove("active");
+});
+
+document.querySelectorAll("#nav-links a").forEach(link => {
+  link.addEventListener("click", () => {
+    navLinks.classList.remove("active");
+    overlay.classList.remove("active");
+    toggle.classList.remove("active");
+  });
+});
+
+
+
+window.addEventListener("scroll", () => {
+  const nav = document.querySelector("nav");
+
+  if (window.scrollY > 50) {
+    nav.classList.add("scrolled");
+  } else {
+    nav.classList.remove("scrolled");
+  }
+});
+
+function goToProject() {
+  document.body.classList.add("fade-out");
+
+  setTimeout(() => {
+    window.location.href = "task-manager/index.html";
   }, 400);
 }
 
 
+document.querySelectorAll("a").forEach(link => {
+  link.addEventListener("click", function(e) {
+    const href = this.getAttribute("href");
+
+    if (href && href.includes("task-manager")) {
+      e.preventDefault();
+      document.body.classList.add("fade-out");
+
+      setTimeout(() => {
+        window.location.href = href;
+      }, 300);
+    }
+  });
+});
+
+window.addEventListener("storage", () => {
+  const theme = localStorage.getItem("theme");
+
+  if (theme === "light") {
+    document.body.classList.add("light-mode");
+  } else {
+    document.body.classList.remove("light-mode");
+  }
+});
