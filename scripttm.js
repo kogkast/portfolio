@@ -103,7 +103,7 @@ function goBack() {
   document.body.style.transform = "scale(0.98)";
 
   setTimeout(() => {
-    window.location.href = "../index.html";
+    window.location.href = ".."/portfolio.io/"";
   }, 400);
 }
 
